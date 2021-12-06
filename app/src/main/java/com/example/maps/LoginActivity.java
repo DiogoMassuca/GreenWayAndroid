@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import org.json.JSONObject;
@@ -26,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
     }
 
-    /*public void onClickLogin(View v){
+    public void onClickLogin(View v){
         DownloadTaskLogin task = new DownloadTaskLogin();
         try {
             login = task.execute("https://greenwayiade.herokuapp.com/api/users/" + editTextUser.getText().toString() + "/" + editTextPassword.getText().toString()).get();
@@ -39,11 +38,6 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
             login = null;
         }
-    }*/
-
-    public void onClickLogin(View v){
-        Intent intentLogin = new Intent(LoginActivity.this, MapsFinal.class);
-        this.startActivity(intentLogin);
     }
 
     public void onClickSignup(View v){
