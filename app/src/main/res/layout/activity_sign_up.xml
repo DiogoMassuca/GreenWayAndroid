@@ -13,11 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
         android:layout_marginEnd="121dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="92dp"
         android:onClick="onClickCreateAcc"
         android:text="Create Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="131dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="131dp"
-        android:layout_marginBottom="183dp"
+        android:layout_marginBottom="200dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"

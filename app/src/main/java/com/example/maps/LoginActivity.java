@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickLogin(View v){
-        DownloadTaskLogin task = new DownloadTaskLogin();
+        DownloadTaskObject task = new DownloadTaskObject();
         try {
             login = task.execute("https://greenwayiade.herokuapp.com/api/users/" + editTextUser.getText().toString() + "/" + editTextPassword.getText().toString()).get();
             Intent intentLogin = new Intent(LoginActivity.this, MapsFinal.class);

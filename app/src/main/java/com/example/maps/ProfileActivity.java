@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        DownloadTaskSpinner task = new DownloadTaskSpinner();
+        DownloadTaskArray task = new DownloadTaskArray();
         ArrayList<String> intolNames = new ArrayList<String>();
         try{
             arrayIntols = task.execute("https://greenwayiade.herokuapp.com/api/intols").get();

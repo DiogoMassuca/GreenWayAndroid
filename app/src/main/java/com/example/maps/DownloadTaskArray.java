@@ -9,13 +9,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadTaskLogin extends AsyncTask<String, Void, JSONObject> {
+public class DownloadTaskArray extends AsyncTask<String, Void, JSONArray> {
 
-    protected JSONObject doInBackground(String... urls){
+    protected JSONArray doInBackground(String... urls){
         String result = "";
         URL url;
         HttpURLConnection urlConnection = null;
-
         try{
             url = new URL(urls[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -30,8 +29,9 @@ public class DownloadTaskLogin extends AsyncTask<String, Void, JSONObject> {
                 data = reader.read();
             }
 
-            JSONObject jsonObject = new JSONObject(result);
-            return jsonObject;
+            JSONArray arr = new JSONArray(result);
+
+            return arr;
 
         } catch(Exception e){
             e.printStackTrace();

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +14,20 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+
 import com.example.maps.databinding.ActivityMapsFinalBinding;
-import com.google.android.gms.maps.CameraUpdateFactory;
+//import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
@@ -29,6 +37,7 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
     MapView mapView;
     LocationManager locationManager;
     LocationListener locationListener;
+    JSONArray arrayRes = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
 
+
         // 1 - Criar o location Manager para ir buscar
         // a localização onde o nosso device está
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -50,11 +60,12 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(userLocation).title("Here"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+                mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location"));
+
+
             }
+
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -74,15 +85,12 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
 
         // 3 - Detetar se o utilizador nos deu
         // permissões para obter a localização
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
-        {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
-        }
-        else
-        {
+        } else {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     0,
@@ -91,16 +99,15 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
             );
         }
     }
+
     // 4 - Verificar se temos permissões ao executar a nossa Activity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        {
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED)
-            {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         0,
@@ -113,10 +120,47 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
 
 
     // OnMapReadyCallBack Methods
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        /*LatLng latLng = new LatLng(38.70733381161048, -9.152454157670787);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));*/
+
+        DownloadTaskArray task = new DownloadTaskArray();
+        ArrayList<Double> resLat = new ArrayList<>();
+        ArrayList<Double> resLongt = new ArrayList<>();
+
+        try {
+            arrayRes = task.execute("https://greenwayiade.herokuapp.com/api/restaurantes/not/1").get();
+            for (int i = 0; i < arrayRes.length(); i++) {
+                resLat.add(arrayRes.getJSONObject(i).getDouble("restauranteLat"));
+                resLongt.add(arrayRes.getJSONObject(i).getDouble("restauranteLongt"));
+                LatLng ResTest = new LatLng(resLat.get(0), resLongt.get(0));
+
+                //Marcardores nos restaurantes
+                mMap.addMarker(new MarkerOptions().position(ResTest));
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

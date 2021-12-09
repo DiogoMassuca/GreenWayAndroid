@@ -9,12 +9,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadTaskSpinner extends AsyncTask<String, Void, JSONArray> {
+public class DownloadTaskObject extends AsyncTask<String, Void, JSONObject> {
 
-    protected JSONArray doInBackground(String... urls){
+    protected JSONObject doInBackground(String... urls){
         String result = "";
         URL url;
         HttpURLConnection urlConnection = null;
+
         try{
             url = new URL(urls[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -29,9 +30,8 @@ public class DownloadTaskSpinner extends AsyncTask<String, Void, JSONArray> {
                 data = reader.read();
             }
 
-            JSONArray arr = new JSONArray(result);
-
-            return arr;
+            JSONObject jsonObject = new JSONObject(result);
+            return jsonObject;
 
         } catch(Exception e){
             e.printStackTrace();
