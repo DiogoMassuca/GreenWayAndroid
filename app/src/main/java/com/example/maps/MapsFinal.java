@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.maps.databinding.ActivityMapsFinalBinding;
@@ -38,6 +39,7 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
     LocationManager locationManager;
     LocationListener locationListener;
     JSONArray arrayRes = null;
+    int currentIntol = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,11 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
         mapView = findViewById(R.id.mapView);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
+
+        Bundle b = getIntent().getExtras();
+        Log.i("i", ""+b);
+        if(b != null)
+            currentIntol = b.getInt("intols");
 
 
         // 1 - Criar o location Manager para ir buscar
@@ -62,7 +69,6 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
             public void onLocationChanged(Location location) {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location"));
-
 
             }
 
@@ -136,30 +142,31 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
         }
         mMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
-        /*LatLng latLng = new LatLng(38.70733381161048, -9.152454157670787);
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));*/
 
-        DownloadTaskArray task = new DownloadTaskArray();
-        ArrayList<Double> resLat = new ArrayList<>();
-        ArrayList<Double> resLongt = new ArrayList<>();
+        if (currentIntol != -1) {
 
-        try {
-            arrayRes = task.execute("https://greenwayiade.herokuapp.com/api/restaurantes/not/1").get();
-            for (int i = 0; i < arrayRes.length(); i++) {
-                resLat.add(arrayRes.getJSONObject(i).getDouble("restauranteLat"));
-                resLongt.add(arrayRes.getJSONObject(i).getDouble("restauranteLongt"));
-                LatLng ResTest = new LatLng(resLat.get(0), resLongt.get(0));
+            DownloadTaskArray task = new DownloadTaskArray();
+            ArrayList<Double> resLat = new ArrayList<>();
+            ArrayList<Double> resLongt = new ArrayList<>();
 
-                //Marcardores nos restaurantes
-                mMap.addMarker(new MarkerOptions().position(ResTest));
+            try {
+                Log.i("i", "" + currentIntol);
+                arrayRes = task.execute("https://greenwayiade.herokuapp.com/api/restaurantes/not/" + currentIntol).get();
+                for (int i = 0; i < arrayRes.length(); i++) {
+                    resLat.add(arrayRes.getJSONObject(i).getDouble("restauranteLat"));
+                    resLongt.add(arrayRes.getJSONObject(i).getDouble("restauranteLongt"));
+                    LatLng resTempPos = new LatLng(resLat.get(i), resLongt.get(i));
+
+                    //Marcardores nos restaurantes
+                    mMap.addMarker(new MarkerOptions().position(resTempPos));
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

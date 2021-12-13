@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         DownloadTaskObject task = new DownloadTaskObject();
         try {
             login = task.execute("https://greenwayiade.herokuapp.com/api/users/" + editTextUser.getText().toString() + "/" + editTextPassword.getText().toString()).get();
-            Intent intentLogin = new Intent(LoginActivity.this, MapsFinal.class);
+            Intent intentLogin = new Intent(LoginActivity.this, ProfileActivity.class);
             this.startActivity(intentLogin);
         } catch (InterruptedException e) {
             e.printStackTrace();
