@@ -153,7 +153,8 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
                     LatLng resTempPos = new LatLng(resLat.get(i), resLongt.get(i));
 
                     //Marcardores nos restaurantes
-                    mMap.addMarker(new MarkerOptions().position(resTempPos).title(arrayRes.getJSONObject(i).getString("restauranteName")));
+                    mMap.addMarker(new MarkerOptions().position(resTempPos)
+                            .title(arrayRes.getJSONObject(i).getString("restauranteName")));
 
                 }
             } catch (InterruptedException e) {
@@ -212,6 +213,11 @@ public class MapsFinal extends AppCompatActivity implements OnMapReadyCallback {
     public void onClickGoToProfile(View v){
         Intent intentProfile = new Intent(MapsFinal.this, ProfileActivity.class);
         startActivity(intentProfile);
+    }
+
+    public void onClickGoToRestaurants(View v){
+        Intent intentRes = new Intent(MapsFinal.this, RestaurantsActivity.class);
+        startActivity(intentRes);
     }
 
 }

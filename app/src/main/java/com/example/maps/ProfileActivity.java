@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         Intent intentMaps = new Intent(ProfileActivity.this, MapsFinal.class);
         Bundle mapParameters = new Bundle();
         mapParameters.putInt("intols", currentIntol);
-        Log.i("i", "onClickGoToMaps"+currentIntol);
+        Log.i("i", "onClickGoToMaps" + currentIntol);
         intentMaps.putExtras(mapParameters);
         startActivity(intentMaps);
 
