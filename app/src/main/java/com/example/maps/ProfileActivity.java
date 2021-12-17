@@ -45,7 +45,6 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         }
 
         addItemsOnSpinner(intolNames);
-
     }
 
     public void addItemsOnSpinner(List<String> intols) {

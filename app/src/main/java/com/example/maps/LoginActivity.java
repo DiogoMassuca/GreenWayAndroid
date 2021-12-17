@@ -7,14 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText editTextUser, editTextPassword;
-    JSONObject login = null;
+    JSONArray logins = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +29,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickLogin(View v){
-        DownloadTaskObject task = new DownloadTaskObject();
+        DownloadTaskArray task = new DownloadTaskArray();
+        ArrayList<String>userNames = new ArrayList<>();
+        ArrayList<String>userPasswords = new ArrayList<>();
+
         try {
-            login = task.execute("https://greenwayiade.herokuapp.com/api/users/" + editTextUser.getText().toString() + "/" + editTextPassword.getText().toString()).get();
+            logins = task.execute("https://greenwayiade.herokuapp.com/api/users/").get();
             Intent intentLogin = new Intent(LoginActivity.this, ProfileActivity.class);
-            this.startActivity(intentLogin);
+
+            for (int i = 0; i < logins.length(); i++){
+                userNames.add(logins.getJSONObject(i).getString("name"));
+                userPasswords.add(logins.getJSONObject(i).getString("password"));
+
+                if (editTextUser.getText().toString().equals(userNames.get(i)) && editTextPassword.getText().toString().equals(userPasswords.get(i)))
+                    this.startActivity(intentLogin);
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
-            login = null;
+            logins = null;
         } catch (ExecutionException e) {
             e.printStackTrace();
-            login = null;
+            logins = null;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

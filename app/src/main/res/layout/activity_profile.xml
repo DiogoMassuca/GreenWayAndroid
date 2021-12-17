@@ -12,7 +12,7 @@
         android:layout_width="124dp"
         android:layout_height="58dp"
         android:layout_marginStart="65dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="222dp"
         android:text="Profile"
         android:textSize="34sp"
@@ -80,13 +80,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginEnd="146dp"
-        android:layout_marginBottom="339dp"
+        android:layout_marginBottom="312dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="140dp"
+        android:layout_height="127dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/greenwaylogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

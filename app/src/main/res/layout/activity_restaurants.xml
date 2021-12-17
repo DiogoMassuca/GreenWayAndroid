@@ -9,11 +9,13 @@
 
     <Button
         android:id="@+id/buttonGoToMapsFromRestaurants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="83dp"
+        android:layout_height="41dp"
         android:layout_marginStart="295dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="21dp"
+        android:background="#000000"
+        android:backgroundTint="@color/purple_700"
         android:onClick="onClickGoToMaps"
         android:text="Maps"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,10 +24,10 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="416dp"
-        android:layout_height="584dp"
+        android:layout_width="413dp"
+        android:layout_height="547dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,4 +45,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRestaurants2"
+        android:layout_width="132dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="257dp"
+        android:text="Click to takeaway!"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
