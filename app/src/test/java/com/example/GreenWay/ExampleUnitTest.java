@@ -1,4 +1,4 @@
-package com.example.maps;
+package com.example.GreenWay;
 
 import org.junit.Test;
 

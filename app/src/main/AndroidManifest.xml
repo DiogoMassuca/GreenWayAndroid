@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maps" >
+    package="com.example.GreenWay" >
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Maps" >
         <activity
-            android:name=".RestaurantsActivity"
+            android:name="com.example.GreenWay.RestaurantsActivity"
             android:exported="false" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -34,16 +34,16 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsFinal"
+            android:name="com.example.GreenWay.MapsFinal"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name="com.example.GreenWay.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.example.GreenWay.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.GreenWay.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
