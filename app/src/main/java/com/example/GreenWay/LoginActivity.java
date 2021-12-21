@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText editTextUser, editTextPassword;
+    EditText editTextUser, editTextPassword, editTextEmail;
     JSONArray logins = null;
 
     @Override
@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         DownloadTaskArray task = new DownloadTaskArray();
         ArrayList<String>userNames = new ArrayList<>();
         ArrayList<String>userPasswords = new ArrayList<>();
+        ArrayList<String>userEmails = new ArrayList<>();
 
         try {
             logins = task.execute("https://greenwayiade.herokuapp.com/api/users/").get();
@@ -39,8 +40,9 @@ public class LoginActivity extends AppCompatActivity {
             for (int i = 0; i < logins.length(); i++){
                 userNames.add(logins.getJSONObject(i).getString("name"));
                 userPasswords.add(logins.getJSONObject(i).getString("password"));
+                userEmails.add(logins.getJSONObject(i).getString("email"));
 
-                if (editTextUser.getText().toString().equals(userNames.get(i)) && editTextPassword.getText().toString().equals(userPasswords.get(i)))
+                if (editTextUser.getText().toString().equals(userNames.get(i)) && editTextPassword.getText().toString().equals(userPasswords.get(i)) || editTextUser.getText().toString().equals(userEmails.get(i)) && editTextPassword.getText().toString().equals(userPasswords.get(i)))
                     this.startActivity(intentLogin);
             }
 

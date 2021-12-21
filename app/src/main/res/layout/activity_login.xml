@@ -30,7 +30,7 @@
         android:layout_marginBottom="140dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         android:layout_marginBottom="27dp"
         android:ems="10"
         android:hint="Username/Email"
-        android:inputType="textPersonName"
+        android:inputType="textWebEmailAddress|textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
